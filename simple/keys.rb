@@ -12,7 +12,7 @@ Shoes.app :width => 200, :height => 50 do
                         "Opened file dialog"
                       else
                         "the #{key.inspect} key was pressed"
-                  end
+                    end
   end
   
 end
