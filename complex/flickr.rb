@@ -6,7 +6,8 @@ Shoes.setup do
 end
 
 require 'net/flickr'
-Shoes.app :title => "Flickr" do
+Shoes.app :title => "Flickr",
+          :height => 250 do
   
   start do
     get_images
@@ -26,10 +27,14 @@ Shoes.app :title => "Flickr" do
   
   def get_images
     @photos.clear
-    @flickr_service.photos.recent(:per_page => 10).each do |p|
+    @flickr_service.photos.recent(:per_page => 12).each do |p|
      
       @photos.append do
-        @image = image p.source_url(:thumb), :height=>100, :width=>100, :margin_right=>10, :margin_bottom => 10, :margin_left => 10
+        @image = image p.source_url(:thumb), :height=>100, :width=>100,
+                 :margin_top => 10,
+                 :margin_right=>10,
+                 :margin_bottom => 10,
+                 :margin_left => 10
       
         @image.click do
           display_larger_image(p)
@@ -41,14 +46,15 @@ Shoes.app :title => "Flickr" do
   
   def display_larger_image(photo)
     
-  window do
-      stack :width=>"100%"  do
-        title photo.title, :align => "center"
+  window :width=>600 do
+    title photo.title, :align => "center"
+    i = image(photo.source_url, :width=>590, :margin => 4)
+    i.click do
+      close
+    end
+    para photo.description, :align => "center"
         
-        image photo.source_url(:medium), :align => "center"
-        para photo.description, :align => "center"
-        
-      end
+      
     end
   end
 
