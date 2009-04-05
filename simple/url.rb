@@ -4,12 +4,25 @@
 class Pages < Shoes
   
   url "/", :index
+  url "/hello", :hello
   url "/about", :about
   
   def navbar
     flow :width => "100%" do
       para link("Home", :click => "/"), " | "
+      para link("Hello", :click => "/hello"), " | "
       para link("About", :click => "/about")
+    end
+  end
+  
+  def hello
+    navbar
+    flow do
+      para "Enter your name"
+      @name = edit_line
+      button "Go" do
+        alert @name.text
+      end
     end
   end
   
